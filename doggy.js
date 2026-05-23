@@ -12,17 +12,28 @@
     lines.forEach(l => {
       let t = l.trim();
       if (t.startsWith("title#")) { 
-        siteTitle = t.split("#")[1].trim(); 
+        // FIX: Extracting the string from the array before running .trim()
+        const parts = t.split("#");
+        if (parts[1]) siteTitle = parts[1].trim(); 
         return; 
       }
       if (t.startsWith("bar#")) { 
-        current = t.split("#")[1].trim(); 
-        pages[current] = []; 
+        const parts = t.split("#");
+        if (parts[1]) {
+          current = parts[1].trim(); 
+          pages[current] = []; 
+        }
         return; 
       }
       if (current) {
-        if (t.startsWith("page#")) l = "# " + t.split("#")[1].trim();
-        if (t.startsWith("header#")) l = "## " + t.split("#")[1].trim();
+        if (t.startsWith("page#")) {
+          const parts = t.split("#");
+          if (parts[1]) l = "# " + parts[1].trim();
+        }
+        if (t.startsWith("header#")) {
+          const parts = t.split("#");
+          if (parts[1]) l = "## " + parts[1].trim();
+        }
         pages[current].push(l);
       }
     });
