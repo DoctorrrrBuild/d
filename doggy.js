@@ -12,7 +12,6 @@
     lines.forEach(l => {
       let t = l.trim();
       if (t.startsWith("title#")) { 
-        // FIX: Extracting the string from the array before running .trim()
         const parts = t.split("#");
         if (parts[1]) siteTitle = parts[1].trim(); 
         return; 
