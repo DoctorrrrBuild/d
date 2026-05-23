@@ -11,8 +11,15 @@
 
     lines.forEach(l => {
       let t = l.trim();
-      if (t.startsWith("title#")) { siteTitle = t.split("#")[1].trim(); return; }
-      if (t.startsWith("bar#")) { current = t.split("#")[1].trim(); pages[current] = []; return; }
+      if (t.startsWith("title#")) { 
+        siteTitle = t.split("#")[1].trim(); 
+        return; 
+      }
+      if (t.startsWith("bar#")) { 
+        current = t.split("#")[1].trim(); 
+        pages[current] = []; 
+        return; 
+      }
       if (current) {
         if (t.startsWith("page#")) l = "# " + t.split("#")[1].trim();
         if (t.startsWith("header#")) l = "## " + t.split("#")[1].trim();
@@ -48,7 +55,7 @@
         </style>
       </head>
       <body>
-        <aside id="sidebar"><h1>${siteTitle}</h1><ul id="menu"></ul></aside>
+        <aside id="sidebar"><h1 id="title">${siteTitle}</h1><ul id="menu"></ul></aside>
         <main id="content"></main>
       </body>`;
 
