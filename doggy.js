@@ -1,12 +1,11 @@
 window.addEventListener('DOMContentLoaded', () => {
-  // 1. Read the raw phrase-based text right out of the browser body
-  const raw = document.body.innerText;
+  // Extract text safely without browser encoding issues
+  const raw = document.body.innerText || document.body.textContent;
   const lines = raw.split('\n');
   let siteTitle = "Docs";
   const pages = {};
   let current = null;
 
-  // 2. Parse the custom vocabulary strings
   lines.forEach(l => {
     let t = l.trim();
     if (t.startsWith("title#")) { siteTitle = t.split("#")[1].trim(); return; }
@@ -18,7 +17,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 3. Re-write the page into an advanced documentation theme shell
+  // Re-write the page layout clean
   document.documentElement.innerHTML = `
     <head>
       <meta charset="UTF-8">
@@ -48,14 +47,13 @@ window.addEventListener('DOMContentLoaded', () => {
       </style>
     </head>
     <body>
-      <aside id="sidebar"><h1>${siteTitle}</h1><ul id="menu"></ul></aside>
+      <aside id="sidebar"><h1 id="title">${siteTitle}</h1><ul id="menu"></ul></aside>
       <main id="content"></main>
     </body>`;
 
   const menu = document.getElementById('menu');
   const content = document.getElementById('content');
 
-  // 4. Inject compiled Markdown blocks dynamically into tab content frames
   Object.keys(pages).forEach((p, i) => {
     const li = document.createElement('li');
     li.innerText = p;
